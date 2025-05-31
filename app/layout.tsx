@@ -1,3 +1,5 @@
+import { Toaster } from 'react-hot-toast';
+
 import './globals.css';
 
 export default function RootLayout({
@@ -7,7 +9,10 @@ export default function RootLayout({
 }>) {
   return (
     <html>
-      <body>{children}</body>
+      <body>
+        <Toaster />
+        {children}
+      </body>
     </html>
   );
 }
