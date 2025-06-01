@@ -91,7 +91,7 @@ export function Header() {
                 <>
                   <Link
                     href='/admin/posts/create'
-                    className={`hover:text-gray-600 ${pathname.startsWith('/admin/posts/create') ? 'font-medium' : ''}`}
+                    className={`hover:text-gray-600 ${pathname.startsWith('/admin/post/create') ? 'font-medium' : ''}`}
                   >
                     글쓰기
                   </Link>
