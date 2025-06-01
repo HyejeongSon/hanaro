@@ -90,7 +90,7 @@ export function Header() {
               {isAdmin && (
                 <>
                   <Link
-                    href='/admin/posts/create'
+                    href='/admin/post/create'
                     className={`hover:text-gray-600 ${pathname.startsWith('/admin/post/create') ? 'font-medium' : ''}`}
                   >
                     글쓰기
