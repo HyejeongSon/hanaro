@@ -22,7 +22,10 @@ export function FormCard({ title, footer, children }: Props) {
       </CardHeader>
       <CardContent className='w-[90%]'>{children}</CardContent>
       <CardFooter>
-        <Link href={footer.href} className='text-sky-700 hover:underline'>
+        <Link
+          href={footer.href}
+          className='text-sky-700 text-sm hover:underline'
+        >
           {footer.label}
         </Link>
       </CardFooter>
