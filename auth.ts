@@ -8,7 +8,13 @@ import { LoginSchema } from "./lib/schemas/auth";
 import { getUserByEmail } from "./data/user";
 import bcrypt from "bcryptjs";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const { 
+  handlers, 
+  auth, // getServerSession 역할
+  signIn, 
+  signOut, 
+  unstable_update: update // Beta!
+} = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [ 
     Google,

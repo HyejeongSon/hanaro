@@ -1,7 +1,7 @@
 'use server';
 
 import { LoginSchema } from '../schemas/auth';
-import { signIn } from '@/auth';
+import { auth, signIn, signOut, update } from '@/auth';
 import { redirect } from "next/navigation";
 
 export const signInWithCredentials = async (_: unknown, formData: FormData) => {
@@ -40,10 +40,19 @@ export const signInWithCredentials = async (_: unknown, formData: FormData) => {
   redirect("/");
 }
 
-export async function signInWithGitHub() {
+export const signInWithGitHub = async () => {
   await signIn('github', { redirectTo: '/' });
 }
 
-export async function signInWithGoogle() {
+export const signInWithGoogle = async () => {
   await signIn('google', { redirectTo: '/' });
+}
+
+export const signOutWithForm = async () => {
+  await signOut()
+}
+
+export {
+  auth as getSession, 
+  update as updateSession
 }
