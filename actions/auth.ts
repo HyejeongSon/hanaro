@@ -1,7 +1,7 @@
 'use server';
 
 import { LoginSchema } from '../lib/schemas/auth';
-import { auth, signIn, signOut, update } from '@/auth';
+import { auth, signIn, update } from '@/auth';
 
 export const signInWithCredentials = async (_: unknown, formData: FormData) => {
   const validatedFields = LoginSchema.safeParse({
@@ -44,10 +44,6 @@ export const signInWithGitHub = async () => {
 
 export const signInWithGoogle = async () => {
   await signIn('google', { redirectTo: '/' });
-}
-
-export const signOutWithForm = async () => {
-  await signOut()
 }
 
 export {
