@@ -73,8 +73,7 @@ export function PostForm({ categories, post }: PostFormProps) {
 
         if (result.success) {
           toast.success('게시글이 수정되었습니다.');
-          router.push(`/`);
-          //   router.push(`/posts/${post.id}`);
+          router.push(`/post/${post.id}`);
         } else {
           toast.error(result.message || '게시글 수정에 실패했습니다.');
         }
@@ -87,8 +86,7 @@ export function PostForm({ categories, post }: PostFormProps) {
 
         if (result.success) {
           toast.success('게시글이 작성되었습니다.');
-          router.push(`/`);
-          //   router.push(`/posts/${result.postId}`);
+          router.push(`/post/${result.postId}`);
         } else {
           toast.error(result.message || '게시글 작성에 실패했습니다.');
         }
