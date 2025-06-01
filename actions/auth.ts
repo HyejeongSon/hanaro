@@ -1,11 +1,9 @@
 'use server';
 
-import { LoginSchema } from '../schemas/auth';
+import { LoginSchema } from '../lib/schemas/auth';
 import { auth, signIn, signOut, update } from '@/auth';
-import { redirect } from "next/navigation";
 
 export const signInWithCredentials = async (_: unknown, formData: FormData) => {
-  // 1. validate Fields
   const validatedFields = LoginSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -20,7 +18,7 @@ export const signInWithCredentials = async (_: unknown, formData: FormData) => {
   try {
     await signIn("credentials", {
       ...validatedFields.data,
-      redirect: false,
+      redirect: false, // 수동 리다이렉트
     });
   } catch (error: unknown) {
     const err = error as { type?: string };
@@ -37,7 +35,7 @@ export const signInWithCredentials = async (_: unknown, formData: FormData) => {
     };
   }
 
-  redirect("/");
+  return { success: true };
 }
 
 export const signInWithGitHub = async () => {

@@ -1,5 +1,10 @@
 'use client';
 
+import {
+  signInWithCredentials,
+  signInWithGitHub,
+  signInWithGoogle,
+} from '@/actions/auth';
 import { useFormValidate } from '@/hooks/useFormValidate';
 import { TLoginFormError } from '@/types/form';
 import toast from 'react-hot-toast';
@@ -8,11 +13,6 @@ import { FcGoogle } from 'react-icons/fc';
 
 import { ChangeEvent, useActionState, useEffect } from 'react';
 
-import {
-  signInWithCredentials,
-  signInWithGitHub,
-  signInWithGoogle,
-} from '@/lib/actions/auth';
 import { LoginSchema } from '@/lib/schemas/auth';
 
 import { Input } from '../ui/input';
@@ -22,7 +22,7 @@ import { FormMessage } from './FormMessage';
 import { Submit } from './Submit';
 
 export function LoginForm() {
-  const [error, action] = useActionState(signInWithCredentials, undefined);
+  const [result, action] = useActionState(signInWithCredentials, undefined);
   const { errors, validateField } =
     useFormValidate<TLoginFormError>(LoginSchema);
 
@@ -32,10 +32,13 @@ export function LoginForm() {
   };
 
   useEffect(() => {
-    if (error?.errorMessage) {
-      toast.error(error.errorMessage);
+    if (result?.errorMessage) {
+      toast.error(result.errorMessage);
     }
-  }, [error]);
+    if (result?.success) {
+      window.location.href = '/';
+    }
+  }, [result]);
 
   return (
     <div className='space-y-3'>

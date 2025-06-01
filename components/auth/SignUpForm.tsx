@@ -1,12 +1,12 @@
 'use client';
 
+import { signUp } from '@/actions/signup';
 import { useFormValidate } from '@/hooks/useFormValidate';
 import { TSignUpFormError } from '@/types/form';
 import toast from 'react-hot-toast';
 
 import { ChangeEvent, useActionState, useEffect } from 'react';
 
-import { signUp } from '@/lib/actions/signup';
 import { SignUpSchema } from '@/lib/schemas/auth';
 
 import { Input } from '../ui/input';
