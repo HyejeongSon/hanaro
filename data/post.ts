@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma"
+import type { Post } from '@/types/post';
 
-export const getLatestPosts = async (limit = 10) => {
+export const getLatestPosts = async (limit = 10): Promise<Post[]> => {
   return await prisma.board.findMany({
     take: limit,
     orderBy: {
@@ -15,16 +16,16 @@ export const getLatestPosts = async (limit = 10) => {
           image: true,
         },
       },
-      _count: {
+      reactions: {
         select: {
-          reactions: true,
+          type: true,
         },
       },
     },
   })
 }
 
-export const getPostsByCategory = async (categoryId: number) => {
+export const getPostsByCategory = async (categoryId: number): Promise<Post[]> => {
   return await prisma.board.findMany({
     where: {
       categoryId,
@@ -41,9 +42,62 @@ export const getPostsByCategory = async (categoryId: number) => {
           image: true,
         },
       },
-      _count: {
+      reactions: {
         select: {
-          reactions: true,
+          type: true,
+        },
+      },
+    },
+  })
+}
+
+export const searchPostsInCategory = async (categoryId: number, query: string): Promise<Post[]> => {
+  return await prisma.board.findMany({
+    where: {
+      categoryId,
+      OR: [{ title: { contains: query } }, { content: { contains: query } }],
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      category: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      },
+      reactions: {
+        select: {
+          type: true,
+        },
+      },
+    },
+  })
+}
+
+export const searchPosts = async (query: string): Promise<Post[]> => {
+  return await prisma.board.findMany({
+    where: {
+      OR: [{ title: { contains: query } }, { content: { contains: query } }],
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      category: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      },
+      reactions: {
+        select: {
+          type: true,
         },
       },
     },
@@ -64,27 +118,6 @@ export const getPostById = async (id: number) => {
       },
       reactions: true,
       Image: true,
-    },
-  })
-}
-
-export const searchPosts = async (query: string) => {
-  return await prisma.board.findMany({
-    where: {
-      OR: [{ title: { contains: query } }, { content: { contains: query } }],
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    include: {
-      category: true,
-      user: {
-        select: {
-          id: true,
-          name: true,
-          image: true,
-        },
-      },
     },
   })
 }
