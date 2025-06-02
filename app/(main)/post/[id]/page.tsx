@@ -43,9 +43,7 @@ export default async function PostPage({ params }: Props) {
     <div className='max-w-4xl mx-auto'>
       <div className='mb-6'>
         <Link href={`/categories/${post.categoryId}`}>
-          <span className='text-blue-600 hover:underline'>
-            ← {post.category.name}
-          </span>
+          <span className='text-blue-600'>← {post.category.name}</span>
         </Link>
       </div>
 
@@ -88,7 +86,9 @@ export default async function PostPage({ params }: Props) {
         </CardHeader>
         <CardContent>
           <div className='prose max-w-none min-h-[5rem]'>
-            <p className='whitespace-pre-wrap'>{post.content}</p>
+            <div className='whitespace-pre-wrap'>
+              <p>{post.content}</p>
+            </div>
           </div>
 
           <div className='mt-8 border-t pt-4'>

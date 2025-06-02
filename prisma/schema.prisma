@@ -20,7 +20,6 @@ model User {
   role          Role      @default(USER)
 
   accounts      Account[]
-  // sessions      Session[]
   boards        Board[]
   boardReaction BoardReaction[]
 
@@ -47,7 +46,7 @@ model Account {
   id_token                 String? @db.Text
   session_state            String?
   refresh_token_expires_in Int?
-  user                     User?   @relation(fields: [userId], references: [id])
+  user                     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -55,19 +54,6 @@ model Account {
   @@unique([provider, providerAccountId])
   @@index([userId])
 }
-
-// model Session {
-//   id           String   @id @default(cuid())
-//   sessionToken String   @unique
-//   userId       String
-//   expires      DateTime
-//   user         User     @relation(fields: [userId], references: [id])
-
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-
-//   @@index([userId])
-// }
 
 model Category {
   id        Int      @id @default(autoincrement())
@@ -80,7 +66,7 @@ model Category {
 model Board {
   id      Int    @id @default(autoincrement())
   title   String
-  content String
+  content String @db.Text
 
   userId     String          @map("user_id")
   categoryId Int             @map("category_id")

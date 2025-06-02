@@ -35,7 +35,7 @@ export function CategorySidebar({ currentCategoryId }: CategorySidebarProps) {
   }, []);
 
   return (
-    <div className='bg-gray-50 p-6 rounded-lg h-fit sticky top-8'>
+    <div className='bg-gray-50 p-6 rounded-lg min-h-[85vh] sticky top-8 bottom-8'>
       <h2 className='text-lg font-semibold mb-4 text-gray-800'>
         카테고리 목록
       </h2>

@@ -56,13 +56,19 @@ export const {
     maxAge: 60 * 60 * 24
   },
   callbacks: {
-    jwt({ token, user }) { // jwt 콜백
+    jwt({ token, user, trigger, session }) { // jwt 콜백
       if (user) {
         token.id = user.id;
         token.role = user.role;
         token.name = user.name;
         token.email = user.email;
         token.image = user.image;
+      }
+      // 세션 업데이트 시 토큰도 업데이트
+      if (trigger === "update" && session?.user) {
+        token.name = session.user.name
+        token.email = session.user.email
+        token.image = session.user.image
       }
       return token;
     },

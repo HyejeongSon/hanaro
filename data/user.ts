@@ -121,8 +121,7 @@ export const updateUser = async (
   id: string,
   data: {
     name?: string
-    email?: string
-    phone?: string
+    phone?: string | null;
     image?: string
   },
 ) => {
