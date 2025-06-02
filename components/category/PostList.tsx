@@ -1,10 +1,16 @@
 import type { Post } from '@/types/post';
-import { Calendar, User } from 'lucide-react';
+import { Calendar, ThumbsDown, ThumbsUp, User } from 'lucide-react';
 
 import Link from 'next/link';
 
 type PostListProps = {
   posts: Post[];
+};
+
+const getReactionCounts = (reactions: { type: 'LIKE' | 'DISLIKE' }[]) => {
+  const likes = reactions.filter((r) => r.type === 'LIKE').length;
+  const dislikes = reactions.filter((r) => r.type === 'DISLIKE').length;
+  return { likes, dislikes };
 };
 
 export function PostList({ posts }: PostListProps) {
@@ -42,6 +48,18 @@ export function PostList({ posts }: PostListProps) {
                 <div className='flex items-center space-x-1'>
                   <Calendar className='h-4 w-4' />
                   <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+                </div>
+              </div>
+
+              {/* 반응 개수 */}
+              <div className='flex items-center space-x-3'>
+                <div className='flex items-center space-x-1'>
+                  <ThumbsUp className='h-4 w-4 text-gray-500' />
+                  <span>{getReactionCounts(post.reactions).likes}</span>
+                </div>
+                <div className='flex items-center space-x-1'>
+                  <ThumbsDown className='h-4 w-4 text-gray-500' />
+                  <span>{getReactionCounts(post.reactions).dislikes}</span>
                 </div>
               </div>
             </div>
