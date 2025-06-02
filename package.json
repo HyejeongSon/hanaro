@@ -13,9 +13,12 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.9.1",
+    "@hookform/resolvers": "^5.0.1",
     "@prisma/client": "^6.8.2",
+    "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-radio-group": "^1.3.7",
+    "@radix-ui/react-select": "^2.2.5",
     "@radix-ui/react-slot": "^1.2.3",
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
@@ -25,10 +28,11 @@
     "next-auth": "^5.0.0-beta.28",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.4",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
     "tailwind-merge": "^3.3.0",
-    "zod": "^3.25.42"
+    "zod": "^3.25.45"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -43,7 +47,11 @@
     "prettier": "^3.5.3",
     "prisma": "^6.8.2",
     "tailwindcss": "^4",
+    "tsx": "^4.19.4",
     "tw-animate-css": "^1.3.2",
     "typescript": "^5"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }
