@@ -1,6 +1,6 @@
 import { auth } from '@/auth';
 import { DeletePostButton } from '@/components/admin/DeletePostButton';
-// import { ReactionButtons } from '@/components/posts/ReactionButtons';
+import { ReactionButtons } from '@/components/reaction/ReactionButtons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getPostById } from '@/data/post';
@@ -92,8 +92,7 @@ export default async function PostPage({ params }: Props) {
           </div>
 
           <div className='mt-8 border-t pt-4'>
-            <p>좋아요/싫어요 버튼</p>
-            {/* <ReactionButtons postId={post.id} /> */}
+            <ReactionButtons postId={post.id} />
           </div>
         </CardContent>
       </Card>
