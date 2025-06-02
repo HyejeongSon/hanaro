@@ -4,14 +4,14 @@ import { getPostsByCategory, searchPostsInCategory } from '@/data/post';
 
 import { notFound } from 'next/navigation';
 
-export default async function CategoryPage({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
+type Props = {
+  params: Promise<{ id: string }>;
   searchParams: { q?: string };
-}) {
-  const categoryId = Number.parseInt(params.id);
+};
+
+export default async function CategoryPage({ params, searchParams }: Props) {
+  const awaitedParams = await params;
+  const categoryId = Number.parseInt(awaitedParams.id);
   const searchQuery = searchParams.q || '';
 
   if (isNaN(categoryId)) {
