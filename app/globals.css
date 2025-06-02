@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -38,6 +38,12 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Custom Point Colors */
+  --point-bg: #e0e7ff;
+  --point-text: #4438cae7;
+  --point-hover-bg: #c7d2fe;
+  --point-hover-text: #3730a3;
 }
 
 @theme inline {
@@ -78,6 +84,12 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Custom Point Colors */
+  --color-point-bg: var(--point-bg);
+  --color-point-text: var(--point-text);
+  --color-point-hover-bg: var(--point-hover-bg);
+  --color-point-hover-text: var(--point-hover-text);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -156,4 +168,25 @@ body {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+}
+
+/* Point Color Utilities */
+.bg-point {
+  background-color: var(--color-point-bg);
+}
+
+.text-point {
+  color: var(--color-point-text);
+}
+
+.hover\:bg-point-hover:hover {
+  background-color: var(--color-point-hover-bg);
+}
+
+.hover\:text-point-hover:hover {
+  color: var(--color-point-hover-text);
+}
+
+.border-point {
+  border-color: var(--color-point-text);
 }

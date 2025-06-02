@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { LogIn, LogOut } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 
@@ -18,18 +17,25 @@ export function Header() {
   };
 
   return (
-    <header className='border-b'>
+    <header className='border-b bg-white'>
       <div className='container mx-auto px-4 py-4'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center space-x-6'>
-            <Link href='/' className='text-2xl font-bold'>
+            <Link
+              href='/'
+              className='text-2xl font-bold text-gray-900 hover:text-point transition-colors'
+            >
               Hanaro Tech
             </Link>
 
-            <nav className='hidden md:flex space-x-4 mt-1'>
+            <nav className='hidden md:flex items-center space-x-1'>
               <Link
                 href='/categories'
-                className={`hover:text-gray-600 ${pathname.startsWith('/categories') ? 'font-semibold' : ''}`}
+                className={`px-3 py-2 rounded-lg transition-colors ${
+                  pathname.startsWith('/categories')
+                    ? 'text-point font-medium'
+                    : 'text-gray-700 hover:text-point'
+                }`}
               >
                 카테고리
               </Link>
@@ -38,13 +44,21 @@ export function Header() {
                 <>
                   <Link
                     href='/admin/post/create'
-                    className={`hover:text-gray-600 ${pathname.startsWith('/admin/post/create') ? 'font-semibold' : ''}`}
+                    className={`px-3 py-2 rounded-lg transition-colors ${
+                      pathname.startsWith('/admin/post/create')
+                        ? 'text-point font-medium'
+                        : 'text-gray-700 hover:text-point'
+                    }`}
                   >
                     글쓰기
                   </Link>
                   <Link
                     href='/admin/users'
-                    className={`hover:text-gray-600 ${pathname.startsWith('/admin/users') ? 'font-semibold' : ''}`}
+                    className={`px-3 py-2 rounded-lg transition-colors ${
+                      pathname.startsWith('/admin/users')
+                        ? 'text-point font-medium'
+                        : 'text-gray-700 hover:text-point'
+                    }`}
                   >
                     회원관리
                   </Link>
@@ -53,29 +67,51 @@ export function Header() {
             </nav>
           </div>
 
-          <div className='flex items-center space-x-4 mt-1'>
+          <div className='flex items-center space-x-1'>
             {session ? (
-              <div className='flex items-center space-x-1'>
-                <Link href='/mypage'>
-                  <Button variant='ghost'>마이페이지</Button>
+              <>
+                <Link
+                  href='/mypage'
+                  className={`px-3 py-2 rounded-lg transition-colors ${
+                    pathname === '/mypage'
+                      ? 'text-point font-medium'
+                      : 'text-gray-700 hover:text-point'
+                  }`}
+                >
+                  마이페이지
                 </Link>
-                <Button variant='ghost' onClick={handleSignOut}>
+                <button
+                  onClick={handleSignOut}
+                  className='flex items-center space-x-1 px-3 py-2 rounded-lg text-gray-700 hover:text-point transition-colors cursor-pointer'
+                >
                   <LogOut className='h-4 w-4' />
-                  로그아웃
-                </Button>
-              </div>
+                  <span>로그아웃</span>
+                </button>
+              </>
             ) : (
-              <div className='flex items-center space-x-1'>
-                <Link href='/signup'>
-                  <Button variant='ghost'>회원가입</Button>
+              <>
+                <Link
+                  href='/signup'
+                  className={`px-3 py-2 rounded-lg transition-colors ${
+                    pathname === '/signup'
+                      ? 'text-point font-medium'
+                      : 'text-gray-700 hover:text-point'
+                  }`}
+                >
+                  회원가입
                 </Link>
-                <Link href='/login'>
-                  <Button variant='ghost'>
-                    <LogIn className='h-4 w-4' />
-                    로그인
-                  </Button>
+                <Link
+                  href='/login'
+                  className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors ${
+                    pathname === '/login'
+                      ? 'text-point font-medium'
+                      : 'text-gray-700 hover:text-point'
+                  }`}
+                >
+                  <LogIn className='h-4 w-4' />
+                  <span>로그인</span>
                 </Link>
-              </div>
+              </>
             )}
           </div>
         </div>
