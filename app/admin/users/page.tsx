@@ -13,7 +13,7 @@ export default async function UsersPage({
     : await getAllUsersWithoutSelf();
 
   return (
-    <div>
+    <div className='max-w-4xl mx-auto'>
       <h1 className='text-3xl font-bold mb-8'>회원 관리</h1>
 
       <UserSearchForm defaultValue={query} />
