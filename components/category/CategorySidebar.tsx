@@ -1,7 +1,7 @@
 'use client';
 
 import { getCategoriesWithPostCount } from '@/data/category';
-import { CategoryWithCount } from '@/types/category';
+import type { CategoryWithCount } from '@/types/category';
 
 import Link from 'next/link';
 
@@ -46,7 +46,7 @@ export function CategorySidebar({ currentCategoryId }: CategorySidebarProps) {
           <div
             className={`flex justify-between items-center p-2 rounded hover:bg-gray-200 transition-colors ${
               currentCategoryId === 0
-                ? 'bg-blue-100 text-blue-700 font-medium'
+                ? 'bg-point text-point font-medium'
                 : 'text-gray-700'
             }`}
           >
@@ -65,7 +65,7 @@ export function CategorySidebar({ currentCategoryId }: CategorySidebarProps) {
             <div
               className={`flex justify-between items-center p-2 rounded hover:bg-gray-200 transition-colors ${
                 currentCategoryId === category.id
-                  ? 'bg-blue-100 text-blue-700 font-medium'
+                  ? 'bg-point text-point font-medium'
                   : 'text-gray-700'
               }`}
             >

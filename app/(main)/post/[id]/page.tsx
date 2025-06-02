@@ -43,7 +43,7 @@ export default async function PostPage({ params }: Props) {
     <div className='max-w-4xl mx-auto'>
       <div className='mb-6'>
         <Link href={`/categories/${post.categoryId}`}>
-          <span className='text-blue-600'>← {post.category.name}</span>
+          <span className='text-point text-lg'>← {post.category.name}</span>
         </Link>
       </div>
 

@@ -74,10 +74,10 @@ export function ReactionButtons({ postId }: { postId: number }) {
         size='sm'
         disabled={isLoading}
         onClick={() => handleReaction('LIKE')}
-        className={`flex items-center space-x-2 ${userReaction === 'LIKE' ? 'text-blue-600' : ''}`}
+        className={`flex items-center space-x-2 ${userReaction === 'LIKE' ? 'text-point' : ''}`}
       >
         <ThumbsUp
-          className={`h-5 w-5 ${userReaction === 'LIKE' ? 'fill-blue-600' : ''}`}
+          className={`h-5 w-5 ${userReaction === 'LIKE' ? 'fill-current text-point' : ''}`}
         />
         <span>{counts.likes}</span>
       </Button>

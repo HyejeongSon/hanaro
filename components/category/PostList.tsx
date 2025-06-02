@@ -28,7 +28,7 @@ export function PostList({ posts }: PostListProps) {
         <Link href={`/post/${post.id}`} key={post.id} className='block'>
           <div className='bg-white border rounded-lg p-6 hover:shadow-md transition-shadow'>
             {/* 게시글 제목 */}
-            <h2 className='text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 transition-colors'>
+            <h2 className='text-xl font-semibold text-gray-900 mb-3 hover:text-point transition-colors'>
               {post.title}
             </h2>
 
@@ -54,11 +54,11 @@ export function PostList({ posts }: PostListProps) {
               {/* 반응 개수 */}
               <div className='flex items-center space-x-3'>
                 <div className='flex items-center space-x-1'>
-                  <ThumbsUp className='h-4 w-4 text-gray-500' />
+                  <ThumbsUp className='h-4 w-4 text-point' />
                   <span>{getReactionCounts(post.reactions).likes}</span>
                 </div>
                 <div className='flex items-center space-x-1'>
-                  <ThumbsDown className='h-4 w-4 text-gray-500' />
+                  <ThumbsDown className='h-4 w-4 text-red-500' />
                   <span>{getReactionCounts(post.reactions).dislikes}</span>
                 </div>
               </div>
