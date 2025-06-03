@@ -16,7 +16,7 @@ const getReactionCounts = (reactions: { type: 'LIKE' | 'DISLIKE' }[]) => {
 
 export function LatestPostsSection({ posts }: LatestPostsSectionProps) {
   return (
-    <Card className='h-full flex flex-col'>
+    <Card className='h-full flex flex-col border-none'>
       <CardHeader className='flex flex-row items-center justify-between flex-shrink-0'>
         <CardTitle className='flex items-center space-x-2'>
           <Clock className='h-5 w-5' />

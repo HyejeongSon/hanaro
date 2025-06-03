@@ -25,7 +25,7 @@ export function PopularPostsSection({ posts }: PopularPostsSectionProps) {
     .slice(0, 3);
 
   return (
-    <Card className='flex-1'>
+    <Card className='flex-1 border-none'>
       <CardHeader>
         <CardTitle className='flex items-center space-x-2'>
           <TrendingUp className='h-5 w-5' />

@@ -26,6 +26,49 @@ export const getLatestPosts = async (limit = 10): Promise<Post[]> => {
   });
 };
 
+export const getLatestPostsByCategory = async (
+  limit = 3
+): Promise<{ [categoryName: string]: Post[] }> => {
+  // 모든 카테고리 가져오기
+  const categories = await prisma.category.findMany({
+    orderBy: { id: 'asc' },
+  });
+
+  const result: { [categoryName: string]: Post[] } = {};
+
+  // 각 카테고리별로 최신 게시글 가져오기
+  for (const category of categories) {
+    const posts = await prisma.board.findMany({
+      where: {
+        categoryId: category.id,
+      },
+      take: limit,
+      orderBy: {
+        createdAt: 'desc',
+      },
+      include: {
+        category: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            image: true,
+          },
+        },
+        reactions: {
+          select: {
+            type: true,
+          },
+        },
+      },
+    });
+
+    result[category.name] = posts;
+  }
+
+  return result;
+};
+
 export const getPostsByCategory = async (
   categoryId: number
 ): Promise<Post[]> => {
