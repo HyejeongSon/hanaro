@@ -6,13 +6,14 @@ import { notFound } from 'next/navigation';
 
 type Props = {
   params: Promise<{ id: string }>;
-  searchParams: { q?: string };
+  searchParams: Promise<{ q?: string }>;
 };
 
 export default async function CategoryPage({ params, searchParams }: Props) {
   const awaitedParams = await params;
+  const awaitedSearchParams = await searchParams;
   const categoryId = Number.parseInt(awaitedParams.id);
-  const searchQuery = searchParams.q || '';
+  const searchQuery = awaitedSearchParams.q?.trim() || '';
 
   if (isNaN(categoryId)) {
     notFound();

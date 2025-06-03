@@ -2,12 +2,13 @@ import { UserSearchForm } from '@/components/admin/UserSearchForm';
 import { UserTable } from '@/components/admin/UserTable';
 import { getAllUsersWithoutSelf, searchUsersWithoutSelf } from '@/data/user';
 
-export default async function UsersPage({
-  searchParams,
-}: {
-  searchParams: { q?: string };
-}) {
-  const query = searchParams.q?.trim() || '';
+type Props = {
+  searchParams: Promise<{ q?: string }>;
+};
+
+export default async function UsersPage({ searchParams }: Props) {
+  const awaitedSearchParams = await searchParams;
+  const query = awaitedSearchParams.q?.trim() || '';
   const users = query
     ? await searchUsersWithoutSelf(query)
     : await getAllUsersWithoutSelf();
