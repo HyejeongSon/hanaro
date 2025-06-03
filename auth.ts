@@ -17,6 +17,7 @@ export const {
   unstable_update: update, // Beta!
 } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  trustHost: true,
   providers: [
     Google,
     GitHub,
