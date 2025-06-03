@@ -1,4 +1,4 @@
-import { ReactionType } from "@/app/generated/prisma";
+import { ReactionType } from '@/app/generated/prisma';
 
 export type Post = {
   id: number;
@@ -18,4 +18,3 @@ export type Post = {
     type: ReactionType;
   }[];
 };
-

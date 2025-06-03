@@ -1,5 +1,6 @@
-import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
+import { auth } from '@/auth';
+
+import { prisma } from '@/lib/prisma';
 
 /** 이메일로 사용자 조회 */
 export const getUserByEmail = async (email: string) => {
@@ -8,14 +9,14 @@ export const getUserByEmail = async (email: string) => {
 
 /** ID로 사용자 조회 */
 export const getUserById = async (id: string) => {
-  return await prisma.user.findUnique({ where: { id } })
-}
+  return await prisma.user.findUnique({ where: { id } });
+};
 
 /** 모든 사용자 조회 (관리자용) */
 export const getAllUsers = async () => {
   return await prisma.user.findMany({
     orderBy: {
-      createdAt: "desc",
+      createdAt: 'desc',
     },
     select: {
       id: true,
@@ -30,8 +31,8 @@ export const getAllUsers = async () => {
         },
       },
     },
-  })
-}
+  });
+};
 
 /** 사용자 검색 (관리자용) */
 export const searchUsers = async (query: string) => {
@@ -40,7 +41,7 @@ export const searchUsers = async (query: string) => {
       OR: [{ name: { contains: query } }, { email: { contains: query } }],
     },
     orderBy: {
-      createdAt: "desc",
+      createdAt: 'desc',
     },
     select: {
       id: true,
@@ -55,8 +56,8 @@ export const searchUsers = async (query: string) => {
         },
       },
     },
-  })
-}
+  });
+};
 
 /** 로그인한 사용자를 제외한 전체 사용자 조회 */
 export const getAllUsersWithoutSelf = async () => {
@@ -65,7 +66,7 @@ export const getAllUsersWithoutSelf = async () => {
 
   return await prisma.user.findMany({
     where: currentUserId ? { id: { not: currentUserId } } : {},
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: 'desc' },
     select: {
       id: true,
       name: true,
@@ -91,15 +92,12 @@ export const searchUsersWithoutSelf = async (query: string) => {
     where: {
       AND: [
         {
-          OR: [
-            { name: { contains: query } },
-            { email: { contains: query } },
-          ],
+          OR: [{ name: { contains: query } }, { email: { contains: query } }],
         },
         currentUserId ? { id: { not: currentUserId } } : {},
       ],
     },
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: 'desc' },
     select: {
       id: true,
       name: true,
@@ -120,20 +118,20 @@ export const searchUsersWithoutSelf = async (query: string) => {
 export const updateUser = async (
   id: string,
   data: {
-    name?: string
+    name?: string;
     phone?: string | null;
-    image?: string
-  },
+    image?: string;
+  }
 ) => {
   return await prisma.user.update({
     where: { id },
     data,
-  })
-}
+  });
+};
 
 /** 사용자 삭제 */
 export const deleteUser = async (id: string) => {
   return await prisma.user.delete({
     where: { id },
-  })
-}
+  });
+};

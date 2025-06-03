@@ -1,14 +1,14 @@
-"use server"
+'use server';
 
-import { prisma } from "@/lib/prisma"
+import { prisma } from '@/lib/prisma';
 
 export const getAllCategories = async () => {
   return await prisma.category.findMany({
     orderBy: {
-      id: "asc",
+      id: 'asc',
     },
-  })
-}
+  });
+};
 
 export const getCategoriesWithPostCount = async () => {
   return await prisma.category.findMany({
@@ -20,13 +20,13 @@ export const getCategoriesWithPostCount = async () => {
       },
     },
     orderBy: {
-      id: "asc",
+      id: 'asc',
     },
-  })
-}
+  });
+};
 
 export const getCategoryById = async (id: number) => {
   return await prisma.category.findUnique({
     where: { id },
-  })
-}
+  });
+};

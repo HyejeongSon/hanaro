@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { ZodObject, ZodRawShape } from "zod";
+import { ZodObject, ZodRawShape } from 'zod';
+
+import { useState } from 'react';
 
 export function useFormValidate<T>(schema: ZodObject<ZodRawShape>) {
   const [errors, setErrors] = useState<Partial<T>>();

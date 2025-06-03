@@ -1,29 +1,30 @@
-import NextAuth from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "./lib/prisma";
-import Google from "next-auth/providers/google";
-import GitHub from "next-auth/providers/github";
-import Credentials from "next-auth/providers/credentials";
-import { LoginSchema } from "./lib/schemas/auth";
-import { getUserByEmail } from "./data/user";
-import bcrypt from "bcryptjs";
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import bcrypt from 'bcryptjs';
+import NextAuth from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
+import GitHub from 'next-auth/providers/github';
+import Google from 'next-auth/providers/google';
 
-export const { 
-  handlers, 
+import { getUserByEmail } from './data/user';
+import { prisma } from './lib/prisma';
+import { LoginSchema } from './lib/schemas/auth';
+
+export const {
+  handlers,
   auth, // getServerSession 역할
-  signIn, 
-  signOut, 
-  unstable_update: update // Beta!
+  signIn,
+  signOut,
+  unstable_update: update, // Beta!
 } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  providers: [ 
+  providers: [
     Google,
     GitHub,
     Credentials({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         const result = LoginSchema.safeParse(credentials);
@@ -48,15 +49,16 @@ export const {
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: '/login',
   },
   secret: process.env.AUTH_SECRET as string, // jwt 생성시 쓰는 암호
   session: {
     strategy: 'jwt',
-    maxAge: 60 * 60 * 24
+    maxAge: 60 * 60 * 24,
   },
   callbacks: {
-    jwt({ token, user, trigger, session }) { // jwt 콜백
+    jwt({ token, user, trigger, session }) {
+      // jwt 콜백
       if (user) {
         token.id = user.id;
         token.role = user.role;
@@ -65,20 +67,21 @@ export const {
         token.image = user.image;
       }
       // 세션 업데이트 시 토큰도 업데이트
-      if (trigger === "update" && session?.user) {
-        token.name = session.user.name
-        token.email = session.user.email
-        token.image = session.user.image
+      if (trigger === 'update' && session?.user) {
+        token.name = session.user.name;
+        token.email = session.user.email;
+        token.image = session.user.image;
       }
       return token;
     },
-    session({ session, token }) { // session 콜백
+    session({ session, token }) {
+      // session 콜백
       session.user.id = token.id;
       session.user.role = token.role;
       session.user.name = token.name;
-      session.user.email = token.email ?? "";
+      session.user.email = token.email ?? '';
       session.user.image = token.image;
       return session;
-    }
-  }
-})
+    },
+  },
+});

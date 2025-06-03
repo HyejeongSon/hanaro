@@ -1,7 +1,11 @@
-import { prisma } from "@/lib/prisma"
-import type { ReactionType } from "@/app/generated/prisma"
+import type { ReactionType } from '@/app/generated/prisma';
 
-export const getReactionByUserAndPost = async (userId: string, boardId: number) => {
+import { prisma } from '@/lib/prisma';
+
+export const getReactionByUserAndPost = async (
+  userId: string,
+  boardId: number
+) => {
   return await prisma.boardReaction.findUnique({
     where: {
       userId_boardId: {
@@ -9,20 +13,24 @@ export const getReactionByUserAndPost = async (userId: string, boardId: number) 
         boardId,
       },
     },
-  })
-}
+  });
+};
 
 export const createReaction = async (data: {
-  userId: string
-  boardId: number
-  type: ReactionType
+  userId: string;
+  boardId: number;
+  type: ReactionType;
 }) => {
   return await prisma.boardReaction.create({
     data,
-  })
-}
+  });
+};
 
-export const updateReaction = async (userId: string, boardId: number, type: ReactionType) => {
+export const updateReaction = async (
+  userId: string,
+  boardId: number,
+  type: ReactionType
+) => {
   return await prisma.boardReaction.update({
     where: {
       userId_boardId: {
@@ -31,8 +39,8 @@ export const updateReaction = async (userId: string, boardId: number, type: Reac
       },
     },
     data: { type },
-  })
-}
+  });
+};
 
 export const deleteReaction = async (userId: string, boardId: number) => {
   return await prisma.boardReaction.delete({
@@ -42,23 +50,23 @@ export const deleteReaction = async (userId: string, boardId: number) => {
         boardId,
       },
     },
-  })
-}
+  });
+};
 
 export const getReactionCountsByPostId = async (boardId: number) => {
   const likes = await prisma.boardReaction.count({
     where: {
       boardId,
-      type: "LIKE",
+      type: 'LIKE',
     },
-  })
+  });
 
   const dislikes = await prisma.boardReaction.count({
     where: {
       boardId,
-      type: "DISLIKE",
+      type: 'DISLIKE',
     },
-  })
+  });
 
-  return { likes, dislikes }
-}
+  return { likes, dislikes };
+};

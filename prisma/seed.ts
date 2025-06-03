@@ -1,6 +1,5 @@
-import { PrismaClient, Role } from "@/app/generated/prisma";
-
-import bcrypt from "bcryptjs";
+import { PrismaClient, Role } from '@/app/generated/prisma';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
@@ -51,37 +50,37 @@ main()
 
 async function main() {
   // 카테고리 생성
-  const categories = ["JavaScript", "TypeScript", "React", "etc"]
+  const categories = ['JavaScript', 'TypeScript', 'React', 'etc'];
 
-  const createdCategories = []
+  const createdCategories = [];
   for (const categoryName of categories) {
     const category = await prisma.category.upsert({
       where: { name: categoryName },
       update: {},
       create: { name: categoryName },
-    })
-    createdCategories.push(category)
+    });
+    createdCategories.push(category);
   }
 
   // 관리자 계정 생성
-  const hashedPassword = await bcrypt.hash("admin123!", 10)
+  const hashedPassword = await bcrypt.hash('admin123!', 10);
 
   const adminUser = await prisma.user.upsert({
-    where: { email: "admin@hanaro.com" },
+    where: { email: 'admin@hanaro.com' },
     update: {},
     create: {
-      name: "Admin User",
-      email: "admin@hanaro.com",
+      name: 'Admin User',
+      email: 'admin@hanaro.com',
       password: hashedPassword,
       role: Role.ADMIN,
     },
-  })
+  });
 
   // 각 카테고리별로 게시글 3개씩 생성
   const postTemplates = {
     JavaScript: [
       {
-        title: "JavaScript ES6+ 주요 기능 정리",
+        title: 'JavaScript ES6+ 주요 기능 정리',
         content: `ES6(ES2015)부터 도입된 JavaScript의 주요 기능들을 정리해보겠습니다.
 
 1. let과 const
@@ -104,7 +103,7 @@ const newArray = [...oldArray, newItem];
 이러한 기능들을 활용하면 더 깔끔하고 읽기 쉬운 코드를 작성할 수 있습니다.`,
       },
       {
-        title: "비동기 처리: Promise와 async/await",
+        title: '비동기 처리: Promise와 async/await',
         content: `JavaScript에서 비동기 처리를 다루는 방법에 대해 알아보겠습니다.
 
 Promise는 비동기 작업의 완료 또는 실패를 나타내는 객체입니다.
@@ -131,7 +130,7 @@ async function getData() {
 async/await를 사용하면 비동기 코드를 동기 코드처럼 작성할 수 있어 가독성이 크게 향상됩니다.`,
       },
       {
-        title: "JavaScript 클로저(Closure) 완벽 이해",
+        title: 'JavaScript 클로저(Closure) 완벽 이해',
         content: `클로저는 JavaScript의 핵심 개념 중 하나입니다. 함수와 그 함수가 선언된 렉시컬 환경의 조합을 의미합니다.
 
 클로저의 기본 개념
@@ -174,7 +173,7 @@ const myModule = (function() {
     ],
     TypeScript: [
       {
-        title: "TypeScript 기초: 타입 시스템 이해하기",
+        title: 'TypeScript 기초: 타입 시스템 이해하기',
         content: `TypeScript는 JavaScript에 정적 타입을 추가한 언어입니다. 타입 시스템의 기초를 알아보겠습니다.
 
 기본 타입들
@@ -219,7 +218,7 @@ const result = identity<string>("hello");
 TypeScript를 사용하면 개발 시점에 오류를 잡을 수 있어 더 안전한 코드를 작성할 수 있습니다.`,
       },
       {
-        title: "TypeScript 고급 타입: Union, Intersection, Conditional Types",
+        title: 'TypeScript 고급 타입: Union, Intersection, Conditional Types',
         content: `TypeScript의 고급 타입 기능들을 살펴보겠습니다.
 
 Union Types - 여러 타입 중 하나가 될 수 있는 값을 표현합니다.
@@ -272,7 +271,7 @@ type Required<T> = {
 이러한 고급 타입들을 활용하면 더 정확하고 유연한 타입 시스템을 구축할 수 있습니다.`,
       },
       {
-        title: "TypeScript와 React: 타입 안전한 컴포넌트 만들기",
+        title: 'TypeScript와 React: 타입 안전한 컴포넌트 만들기',
         content: `TypeScript와 React를 함께 사용하여 타입 안전한 컴포넌트를 만드는 방법을 알아보겠습니다.
 
 Props 타입 정의
@@ -355,7 +354,7 @@ TypeScript를 React와 함께 사용하면 컴파일 시점에 오류를 잡을 
     ],
     React: [
       {
-        title: "React Hooks 완벽 가이드: useState와 useEffect",
+        title: 'React Hooks 완벽 가이드: useState와 useEffect',
         content: `React Hooks는 함수형 컴포넌트에서 상태와 생명주기를 다룰 수 있게 해주는 기능입니다.
 
 useState Hook
@@ -436,7 +435,7 @@ function App() {
 Hooks를 잘 활용하면 재사용 가능하고 깔끔한 컴포넌트를 만들 수 있습니다.`,
       },
       {
-        title: "React Context API와 상태 관리",
+        title: 'React Context API와 상태 관리',
         content: `React Context API를 사용하여 전역 상태를 관리하는 방법을 알아보겠습니다.
 
 Context 생성
@@ -539,7 +538,7 @@ function App() {
 Context API를 사용하면 prop drilling 없이 깊은 컴포넌트 트리에서도 상태를 공유할 수 있습니다.`,
       },
       {
-        title: "React 성능 최적화: memo, useMemo, useCallback",
+        title: 'React 성능 최적화: memo, useMemo, useCallback',
         content: `React 애플리케이션의 성능을 최적화하는 방법들을 알아보겠습니다.
 
 React.memo - 컴포넌트의 불필요한 리렌더링을 방지합니다.
@@ -654,7 +653,7 @@ function App() {
     ],
     etc: [
       {
-        title: "웹 개발 트렌드 2024: 주목해야 할 기술들",
+        title: '웹 개발 트렌드 2024: 주목해야 할 기술들',
         content: `2024년 웹 개발 분야에서 주목받고 있는 기술들을 정리해보겠습니다.
 
 프론트엔드 트렌드
@@ -711,7 +710,7 @@ React Server Components가 점점 더 많은 관심을 받고 있습니다.
 이러한 트렌드들을 파악하고 적절히 도입하면 더 효율적이고 현대적인 웹 애플리케이션을 개발할 수 있습니다.`,
       },
       {
-        title: "개발자를 위한 Git 고급 사용법",
+        title: '개발자를 위한 Git 고급 사용법',
         content: `Git의 고급 기능들을 활용하여 더 효율적으로 버전 관리를 하는 방법을 알아보겠습니다.
 
 Git Rebase 활용
@@ -820,11 +819,12 @@ git config --global core.autocrlf input # Mac/Linux
 이러한 Git 고급 기능들을 활용하면 더 효율적이고 체계적인 버전 관리가 가능합니다.`,
       },
     ],
-  }
+  };
 
   // 각 카테고리별로 게시글 생성
   for (const category of createdCategories) {
-    const posts = postTemplates[category.name as keyof typeof postTemplates] || []
+    const posts =
+      postTemplates[category.name as keyof typeof postTemplates] || [];
 
     for (let i = 0; i < posts.length; i++) {
       await prisma.board.create({
@@ -834,20 +834,20 @@ git config --global core.autocrlf input # Mac/Linux
           userId: adminUser.id,
           categoryId: category.id,
         },
-      })
+      });
     }
   }
 
-  console.log("Seed data created successfully!")
-  console.log(`Created ${createdCategories.length} categories`)
-  console.log(`Created ${createdCategories.length * 3} posts`)
+  console.log('Seed data created successfully!');
+  console.log(`Created ${createdCategories.length} categories`);
+  console.log(`Created ${createdCategories.length * 3} posts`);
 }
 
 main()
   .catch((e) => {
-    console.error(e)
-    process.exit(1)
+    console.error(e);
+    process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect()
-  })
+    await prisma.$disconnect();
+  });
