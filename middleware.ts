@@ -1,11 +1,12 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
 import { auth } from './auth';
 import {
-  BASE_URL,
-  PUBLIC_ROUTES,
   ADMIN_ROUTES,
+  BASE_URL,
   MYPAGE_ROUTES,
+  PUBLIC_ROUTES,
 } from './constants/routes';
 
 export async function middleware(request: NextRequest) {
@@ -35,5 +36,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/signup", "/mypage", "/admin/:path*"],
+  matcher: ['/login', '/signup', '/mypage', '/admin/:path*'],
 };

@@ -1,12 +1,12 @@
 'use client';
 
 import { updateProfile } from '@/actions/profile';
-import { User } from '@/app/generated/prisma';
+import type { User } from '@/app/generated/prisma';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { User as UserIcon } from 'lucide-react';
+import { UserIcon } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -16,6 +16,15 @@ import { useEffect, useState } from 'react';
 
 const ProfileSchema = z.object({
   name: z.string().min(1, { message: '이름을 입력해주세요.' }),
+  nickname: z
+    .string()
+    .optional()
+    .refine((val) => !val || val.length >= 2, {
+      message: '닉네임은 최소 2자 이상이어야 합니다.',
+    })
+    .refine((val) => !val || /^[a-zA-Z0-9가-힣_]+$/.test(val), {
+      message: '닉네임은 영문, 숫자, 한글, 언더스코어만 사용 가능합니다.',
+    }),
   phone: z
     .string()
     .optional()
@@ -39,6 +48,7 @@ export function ProfileForm({ user }: { user: User }) {
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
       name: user.name || '',
+      nickname: user.nickname || '',
       phone: user.phone || '',
     },
   });
@@ -55,6 +65,7 @@ export function ProfileForm({ user }: { user: User }) {
     try {
       const result = await updateProfile({
         name: data.name,
+        nickname: data.nickname,
         phone: data.phone,
       });
 
@@ -87,7 +98,7 @@ export function ProfileForm({ user }: { user: User }) {
           {user.image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={user.image}
+              src={user.image || '/placeholder.svg'}
               alt='프로필 이미지'
               className='w-20 h-20 rounded-full object-cover border-2 border-gray-200'
             />
@@ -126,6 +137,18 @@ export function ProfileForm({ user }: { user: User }) {
           <Input id='name' {...register('name')} />
           {errors.name && (
             <p className='text-sm text-red-500'>{errors.name.message}</p>
+          )}
+        </div>
+
+        <div className='space-y-2'>
+          <Label htmlFor='nickname'>닉네임</Label>
+          <Input
+            id='nickname'
+            {...register('nickname')}
+            placeholder='닉네임을 입력해주세요'
+          />
+          {errors.nickname && (
+            <p className='text-sm text-red-500'>{errors.nickname.message}</p>
           )}
         </div>
 

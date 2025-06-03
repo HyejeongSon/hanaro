@@ -21,6 +21,7 @@ export const getAllUsers = async () => {
     select: {
       id: true,
       name: true,
+      nickname: true,
       email: true,
       role: true,
       createdAt: true,
@@ -38,7 +39,11 @@ export const getAllUsers = async () => {
 export const searchUsers = async (query: string) => {
   return await prisma.user.findMany({
     where: {
-      OR: [{ name: { contains: query } }, { email: { contains: query } }],
+      OR: [
+        { name: { contains: query } },
+        { email: { contains: query } },
+        { nickname: { contains: query } },
+      ],
     },
     orderBy: {
       createdAt: 'desc',
@@ -46,6 +51,7 @@ export const searchUsers = async (query: string) => {
     select: {
       id: true,
       name: true,
+      nickname: true,
       email: true,
       role: true,
       createdAt: true,
@@ -70,6 +76,7 @@ export const getAllUsersWithoutSelf = async () => {
     select: {
       id: true,
       name: true,
+      nickname: true,
       email: true,
       role: true,
       createdAt: true,
@@ -92,7 +99,11 @@ export const searchUsersWithoutSelf = async (query: string) => {
     where: {
       AND: [
         {
-          OR: [{ name: { contains: query } }, { email: { contains: query } }],
+          OR: [
+            { name: { contains: query } },
+            { email: { contains: query } },
+            { nickname: { contains: query } },
+          ],
         },
         currentUserId ? { id: { not: currentUserId } } : {},
       ],
@@ -101,6 +112,7 @@ export const searchUsersWithoutSelf = async (query: string) => {
     select: {
       id: true,
       name: true,
+      nickname: true,
       email: true,
       role: true,
       createdAt: true,
@@ -119,6 +131,7 @@ export const updateUser = async (
   id: string,
   data: {
     name?: string;
+    nickname?: string | null;
     phone?: string | null;
     image?: string;
   }

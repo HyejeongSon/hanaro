@@ -839,6 +839,7 @@ git config --global core.autocrlf input # Mac/Linux
   }
 
   console.log('Seed data created successfully!');
+  console.log(`Created admin user`);
   console.log(`Created ${createdCategories.length} categories`);
   console.log(`Created ${createdCategories.length * 3} posts`);
 }

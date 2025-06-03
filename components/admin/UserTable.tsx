@@ -12,6 +12,7 @@ import {
 type User = {
   id: string;
   name: string | null;
+  nickname: string | null;
   email: string | null;
   role: string;
   createdAt: Date;
@@ -28,6 +29,7 @@ export function UserTable({ users }: { users: User[] }) {
         <TableHeader>
           <TableRow>
             <TableHead>이름</TableHead>
+            <TableHead>닉네임</TableHead>
             <TableHead>이메일</TableHead>
             <TableHead>권한</TableHead>
             <TableHead>가입일</TableHead>
@@ -38,7 +40,7 @@ export function UserTable({ users }: { users: User[] }) {
         <TableBody>
           {users.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={6} className='text-center py-4'>
+              <TableCell colSpan={7} className='text-center py-4'>
                 회원이 없습니다.
               </TableCell>
             </TableRow>
@@ -46,6 +48,7 @@ export function UserTable({ users }: { users: User[] }) {
             users.map((user) => (
               <TableRow key={user.id}>
                 <TableCell>{user.name || '-'}</TableCell>
+                <TableCell>{user.nickname || '-'}</TableCell>
                 <TableCell>{user.email || '-'}</TableCell>
                 <TableCell>
                   <span
