@@ -18,7 +18,7 @@ export function FormCard({ title, footer, children }: Props) {
   return (
     <Card className='flex w-[35rem] flex-col items-center border-none shadow-none'>
       <CardHeader className='w-full text-center'>
-        <CardTitle className='text-2xl font-bold'>{title}</CardTitle>
+        <CardTitle className='text-[1.7rem] font-bold'>{title}</CardTitle>
       </CardHeader>
       <CardContent className='w-[90%]'>{children}</CardContent>
       <CardFooter>
