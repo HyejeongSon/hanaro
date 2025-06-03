@@ -1,3 +1,4 @@
+import { Prisma } from '@/app/generated/prisma';
 import type { Post } from '@/types/post';
 
 import { prisma } from '@/lib/prisma';
@@ -97,6 +98,7 @@ export const getPostsByCategory = async (
   });
 };
 
+/*
 export const searchPostsInCategory = async (
   categoryId: number,
   query: string
@@ -126,7 +128,62 @@ export const searchPostsInCategory = async (
     },
   });
 };
+*/
 
+export const searchPostsInCategory = async (
+  categoryId: number,
+  query: string
+): Promise<Post[]> => {
+  // FULLTEXT 검색을 위한 raw query 사용
+  const rawQuery = Prisma.sql`
+    SELECT 
+      b.id, b.title, b.content, b.user_id, b.category_id, 
+      b.created_at, b.updated_at,
+      MATCH(b.title, b.content) AGAINST(${query} IN NATURAL LANGUAGE MODE) as relevance
+    FROM Board b
+    WHERE b.category_id = ${categoryId}
+      AND MATCH(b.title, b.content) AGAINST(${query} IN NATURAL LANGUAGE MODE)
+    ORDER BY relevance DESC
+  `;
+
+  const searchResults = await prisma.$queryRaw<{ id: number }[]>(rawQuery);
+
+  // 검색 결과가 없으면 빈 배열 반환
+  if (!searchResults.length) return [];
+
+  // 검색된 ID로 게시글 정보 가져오기
+  const postIds = searchResults.map((result) => result.id);
+
+  const posts = await prisma.board.findMany({
+    where: {
+      id: { in: postIds },
+    },
+    include: {
+      category: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      },
+      reactions: {
+        select: {
+          type: true,
+        },
+      },
+    },
+  });
+
+  // 검색 결과 순서대로 정렬 (관련성 순서 유지)
+  const orderedPosts = postIds
+    .map((id) => posts.find((post) => post.id === id))
+    .filter(Boolean) as Post[];
+
+  return orderedPosts;
+};
+
+/*
 export const searchPosts = async (query: string): Promise<Post[]> => {
   return await prisma.board.findMany({
     where: {
@@ -151,6 +208,56 @@ export const searchPosts = async (query: string): Promise<Post[]> => {
       },
     },
   });
+};
+*/
+
+export const searchPosts = async (query: string): Promise<Post[]> => {
+  // FULLTEXT 검색을 위한 raw query 사용
+  const rawQuery = Prisma.sql`
+    SELECT 
+      b.id, b.title, b.content, b.user_id, b.category_id, 
+      b.created_at, b.updated_at,
+      MATCH(b.title, b.content) AGAINST(${query} IN NATURAL LANGUAGE MODE) as relevance
+    FROM Board b
+    WHERE MATCH(b.title, b.content) AGAINST(${query} IN NATURAL LANGUAGE MODE)
+    ORDER BY relevance DESC
+  `;
+
+  const searchResults = await prisma.$queryRaw<{ id: number }[]>(rawQuery);
+
+  // 검색 결과가 없으면 빈 배열 반환
+  if (!searchResults.length) return [];
+
+  // 검색된 ID로 게시글 정보 가져오기
+  const postIds = searchResults.map((result) => result.id);
+
+  const posts = await prisma.board.findMany({
+    where: {
+      id: { in: postIds },
+    },
+    include: {
+      category: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      },
+      reactions: {
+        select: {
+          type: true,
+        },
+      },
+    },
+  });
+
+  // 검색 결과 순서대로 정렬 (관련성 순서 유지)
+  const orderedPosts = postIds
+    .map((id) => posts.find((post) => post.id === id))
+    .filter(Boolean) as Post[];
+
+  return orderedPosts;
 };
 
 export const getPostById = async (id: number) => {

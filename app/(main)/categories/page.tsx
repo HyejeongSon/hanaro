@@ -2,11 +2,12 @@ import { CategoryLayout } from '@/components/category/CategoryLayout';
 import { getLatestPosts, searchPosts } from '@/data/post';
 
 type Props = {
-  searchParams: { q?: string };
+  searchParams: Promise<{ q?: string }>;
 };
 
 export default async function CategoriesPage({ searchParams }: Props) {
-  const searchQuery = searchParams.q || '';
+  const awaitedSearchParams = await searchParams;
+  const searchQuery = awaitedSearchParams.q?.trim() || '';
 
   // 검색어가 있으면 검색 함수 사용, 없으면 전체 게시글 가져오기
   const posts = searchQuery

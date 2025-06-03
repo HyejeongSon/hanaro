@@ -106,3 +106,6 @@ ALTER TABLE `board_reaction` ADD CONSTRAINT `board_reaction_user_id_fkey` FOREIG
 
 -- AddForeignKey
 ALTER TABLE `board_reaction` ADD CONSTRAINT `board_reaction_board_id_fkey` FOREIGN KEY (`board_id`) REFERENCES `Board`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE Board
+ADD FULLTEXT INDEX idx_fulltext_title_content (title, content);
