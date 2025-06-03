@@ -24,7 +24,7 @@ export function LatestPostsSection({ posts }: LatestPostsSectionProps) {
         </CardTitle>
         <Link
           href='/categories'
-          className='text-[#4438cab9] hover:text-[#4438ca] px-4 py-1.5 rounded-lg transition-colors'
+          className='text-[#4438cab9] hover:text-[#4438ca] px-4 rounded-lg transition-colors'
         >
           모든 게시글 보기
         </Link>
