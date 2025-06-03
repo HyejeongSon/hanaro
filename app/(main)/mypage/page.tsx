@@ -63,7 +63,7 @@ export default async function MyPage() {
       </Card>
 
       {/* 위험 구역 */}
-      <Card className='bg-red-50 border-red-200 gap-4'>
+      <Card className='border-red-200 bg-[#fef2f221] gap-4'>
         <CardHeader>
           <CardTitle className='text-red-600'>위험 구역</CardTitle>
         </CardHeader>

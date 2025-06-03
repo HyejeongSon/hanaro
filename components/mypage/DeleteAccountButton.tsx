@@ -41,7 +41,11 @@ export function DeleteAccountButton() {
 
   return (
     <>
-      <Button variant='destructive' onClick={() => setIsOpen(true)}>
+      <Button
+        variant='destructive'
+        className='bg-red-500'
+        onClick={() => setIsOpen(true)}
+      >
         계정 탈퇴
       </Button>
 

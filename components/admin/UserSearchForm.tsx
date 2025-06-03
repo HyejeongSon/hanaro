@@ -32,7 +32,7 @@ export function UserSearchForm({
       <div className='relative flex-1'>
         <Input
           type='text'
-          placeholder='이름 또는 이메일로 검색'
+          placeholder='이름, 닉네임 또는 이메일로 검색'
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className='pr-10'
